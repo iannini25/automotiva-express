@@ -9,7 +9,7 @@ const CONFIG = {
   // TODO: número de WhatsApp da oficina, formato internacional, só dígitos.
   // Ex.: 55 (Brasil) + 31 (DDD) + número  ->  '5531999999999'
   WHATSAPP: '5531000000000',          // <<< PLACEHOLDER — TROCAR
-  FRAME_COUNT: 269,                    // filme v2 cinematográfico: T1'(emblema)->T2->plano-sequência(motor sai do cofre e explode)->T4', upscale 2K + grade, 1600x900 @11fps
+  FRAME_COUNT: 271,                    // filme v2.1: T1'' push-in FIXADO no 1º frame da T2 (emenda 1->2 sem corte) -> T2 -> plano-sequência (motor sai do cofre e explode) -> T4', upscale 2K + grade, 1600x900 @11fps
   framePath: (i) => `assets/frames/f_${String(i).padStart(3, '0')}.jpg`,
 };
 
