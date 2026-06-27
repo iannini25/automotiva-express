@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Automotiva Express · Oficina Bosch Car Service em Buritis, BH</title>
+
+  <meta name="description" content="Oficina Bosch Car Service em Buritis, Belo Horizonte. Diagnóstico de precisão, orçamento aprovado por você antes de qualquer reparo e garantia em cada serviço — do óleo à eletrônica embarcada." />
+  <meta name="theme-color" content="#0B0D11" />
+
+  <!-- Open Graph / social -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Automotiva Express · Seu carro novo de novo" />
+  <meta property="og:description" content="Oficina Bosch Car Service em Belo Horizonte. Diagnóstico preciso, orçamento transparente e garantia em todos os serviços." />
+  <meta property="og:image" content="assets/og-image.jpg" />
+  <meta property="og:url" content="https://www.automotivaexpress.com.br/" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="icon" href="assets/logo-automotiva.png" />
+
+  <!-- Fontes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- 1º frame do herói: carrega o quanto antes para o filme aparecer instantâneo -->
+  <link rel="preload" as="image" href="assets/frames/f_001.jpg" fetchpriority="high" />
+</head>
+
+<body>
+
+  <!-- ============================ LOADER ============================ -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="loader__inner">
+      <svg class="loader__gear" viewBox="-60 -60 120 120" width="64" height="64">
+        <g class="gear-rot" id="loaderGear"></g>
+      </svg>
+      <div class="loader__label">CALIBRANDO<span class="loader__pct" id="loaderPct">0%</span></div>
+      <div class="loader__bar"><span id="loaderFill"></span></div>
+    </div>
+  </div>
+
+  <!-- ============================ HEADER ============================ -->
+  <header class="hd" id="hd">
+    <a class="hd__brand" href="#top">
+      <img class="hd__logo" src="assets/logo-automotiva-transp.png" alt="Automotiva Express" />
+    </a>
+
+    <nav class="hd__nav" id="nav">
+      <a href="#servicos">Serviços</a>
+      <a href="#processo">Processo</a>
+      <a href="#bosch">Por que Bosch</a>
+      <a href="#avaliacoes">Avaliações</a>
+      <a href="#contato">Contato</a>
+    </nav>
+
+    <a class="btn btn--wa hd__cta" href="#contato" data-wa>
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.6 4.8-1.3A10 10 0 1 0 12 2Zm5.4 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.4-.7-2.9-1.2-4.7-4.1-4.8-4.3-.2-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6c-.2.2-.3.4-.1.7.2.3.9 1.4 1.9 2.3 1.3 1.1 2.3 1.5 2.6 1.6.3.1.5.1.6-.1l.8-1c.2-.2.4-.2.6-.1l1.9.9c.3.2.4.2.5.4.1.1.1.6-.1 1.2Z"/></svg>
+      Orçamento
+    </a>
+
+    <button class="hd__burger" id="burger" aria-label="Abrir menu" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+  </header>
+
+  <main id="top">
+
+  <!-- ============================ FILM (herói cinematográfico contínuo) ============================ -->
+  <!-- O #film é alto (520vh); o palco fica "sticky" e o canvas "reproduz" o filme conforme o scroll.
+       O texto troca por ATO (crossfade) sobre o filme, depois assenta e as seções estáticas entram. -->
+  <section id="film">
+    <div class="film__stage">
+
+      <!-- camada 1: o "filme" (scroll-vídeo / canvas) -->
+      <canvas class="hero__canvas" id="heroCanvas"></canvas>
+      <!-- scrims adaptativos: o esquerdo serve o ato 1; o inferior sobe nos beats do motor -->
+      <div class="hero__scrim" id="scrimL"></div>
+      <div class="hero__scrim-b" id="scrimB"></div>
+
+      <!-- camada 2: HUD de diagnóstico (sutil) — reaproveitável p/ o handoff de peças (passo 4) -->
+      <svg class="hero__rig" id="rig" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <g class="rig__grid">
+          <line x1="0" y1="350" x2="1200" y2="350" /><line x1="600" y1="0" x2="600" y2="700" />
+          <circle cx="600" cy="350" r="250" /><circle cx="600" cy="350" r="160" />
+        </g>
+      </svg>
+
+      <!-- camada 3: ATOS — o texto troca por faixa de scroll sobre o filme contínuo -->
+      <div class="acts">
+
+        <article class="act act--left" id="act1" data-start="0.00" data-end="0.22">
+          <div class="act__inner">
+            <p class="eyebrow eyebrow--hero">
+              <span class="tick"></span> BOSCH CAR SERVICE · BURITIS — BELO HORIZONTE
+            </p>
+            <h1 class="hero__title">
+              Seu carro<br />
+              <em>novo de novo.</em>
+            </h1>
+            <p class="hero__sub">
+              Você aprova o preço <strong>antes</strong> de qualquer reparo.
+            </p>
+
+            <form class="hero__bar" id="heroBar" aria-label="Iniciar orçamento no WhatsApp">
+              <label class="hero__bar-field">
+                <span>Serviço</span>
+                <select id="hbServico">
+                  <option>Revisão / óleo</option>
+                  <option>Mecânica geral</option>
+                  <option>Freios / ABS</option>
+                  <option>Elétrica / eletrônica</option>
+                  <option>Ar-condicionado</option>
+                  <option>Luz no painel</option>
+                  <option>Outro</option>
+                </select>
+              </label>
+              <label class="hero__bar-field">
+                <span>Veículo</span>
+                <input id="hbVeiculo" type="text" placeholder="Ex.: Corolla 2019" autocomplete="off" />
+              </label>
+              <button class="btn btn--wa hero__bar-go" type="submit">
+                <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.6 4.8-1.3A10 10 0 1 0 12 2Zm5.4 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.4-.7-2.9-1.2-4.7-4.1-4.8-4.3-.2-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6c-.2.2-.3.4-.1.7.2.3.9 1.4 1.9 2.3 1.3 1.1 2.3 1.5 2.6 1.6.3.1.5.1.6-.1l.8-1c.2-.2.4-.2.6-.1l1.9.9c.3.2.4.2.5.4.1.1.1.6-.1 1.2Z"/></svg>
+                Pedir orçamento
+              </button>
+            </form>
+
+            <a class="hero__secondary" href="#processo">Como funciona ↓</a>
+          </div>
+        </article>
+
+        <article class="act act--bottom-left" id="act2" data-start="0.24" data-end="0.45" aria-hidden="true">
+          <div class="act__inner">
+            <p class="act__statement">
+              A gente acha o <strong>problema de verdade.</strong>
+            </p>
+          </div>
+        </article>
+
+        <article class="act act--bottom" id="act3" data-start="0.50" data-end="0.76" aria-hidden="true">
+          <div class="act__inner">
+            <p class="act__statement">
+              <strong>Sem surpresa</strong> na conta.
+            </p>
+          </div>
+        </article>
+
+        <!-- ato 4: fechamento + CTA no beat final (antes mudo). Bookend do slogan. -->
+        <article class="act act--bottom-left" id="act4" data-start="0.80" data-end="1.3" aria-hidden="true">
+          <div class="act__inner act__inner--close">
+            <p class="act__statement act__statement--close">
+              Seu carro <em>novo de novo.</em>
+            </p>
+            <a class="btn btn--wa act__cta" href="#contato">
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.6 4.8-1.3A10 10 0 1 0 12 2Zm5.4 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.4-.7-2.9-1.2-4.7-4.1-4.8-4.3-.2-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6c-.2.2-.3.4-.1.7.2.3.9 1.4 1.9 2.3 1.3 1.1 2.3 1.5 2.6 1.6.3.1.5.1.6-.1l.8-1c.2-.2.4-.2.6-.1l1.9.9c.3.2.4.2.5.4.1.1.1.6-.1 1.2Z"/></svg>
+              Pedir orçamento
+            </a>
+          </div>
+        </article>
+
+      </div>
+
+      <div class="hero__seal">
+        <img src="assets/bosch-car-service.png" alt="Bosch Car Service" />
+      </div>
+
+      <div class="hero__scroll" id="scrollHint"><span></span>role para diagnosticar</div>
+    </div>
+  </section>
+
+  <!-- ============================ BARRA DE CONFIANÇA ============================ -->
+  <section class="trust" aria-label="Indicadores de confiança">
+    <ul class="trust__row">
+      <li data-reveal><strong>Bosch Car Service</strong><span>Certificação Excellence</span></li>
+      <li data-reveal><strong>4,3 ★</strong><span>+299 avaliações no Google</span></li>
+      <li data-reveal><strong data-flag>+15 anos*</strong><span>cuidando de carros em BH</span></li>
+      <li data-reveal><strong>Garantia</strong><span>em peças e mão de obra</span></li>
+    </ul>
+  </section>
+
+  <!-- ============================ A PROMESSA (dor das avaliações) ============================ -->
+  <section class="promise" id="promise">
+    <p class="eyebrow" data-reveal>// O QUE TODO MUNDO TEME NUMA OFICINA</p>
+    <h2 class="promise__quote" data-reveal>
+      “O valor mudou <span>na hora de pagar.</span>”
+    </h2>
+    <p class="promise__lead" data-reveal>
+      Orçamento que aumenta sozinho. Peça trocada que ninguém autorizou. Carro preso por uma
+      semana sem notícia. Você conhece a história — e é exatamente o que <strong>não acontece aqui.</strong>
+    </p>
+    <div class="promise__grid">
+      <div class="promise__card" data-reveal>
+        <span class="num">01</span>
+        <h3>Você aprova o preço antes</h3>
+        <p>O valor de peças e mão de obra é fechado e autorizado por você <em>antes</em> de qualquer reparo. O que você aprova é o que você paga.</p>
+      </div>
+      <div class="promise__card" data-reveal>
+        <span class="num">02</span>
+        <h3>Surgiu algo? A gente para e avisa</h3>
+        <p>Nada de custo extra na conta. Se aparecer um imprevisto, paramos o serviço e pedimos sua autorização — sem surpresa.</p>
+      </div>
+      <div class="promise__card" data-reveal>
+        <span class="num">03</span>
+        <h3>Prazo claro e acompanhamento</h3>
+        <p>Você recebe um prazo no orçamento e atualizações pelo WhatsApp. Serviços rápidos saem no mesmo dia.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ SERVIÇOS (scroll horizontal) ============================ -->
+  <section class="svc" id="servicos">
+    <div class="svc__intro">
+      <p class="eyebrow" data-reveal>// O QUE FAZEMOS</p>
+      <h2 data-reveal>Do reparo simples ao problema que <span>ninguém descobriu.</span></h2>
+      <p class="svc__intro-sub" data-reveal>Seu carro resolvido de ponta a ponta, num só lugar — com diagnóstico Bosch que encontra a causa real, não fica trocando peça por tentativa.</p>
+    </div>
+
+    <div class="svc__viewport" id="svcViewport">
+      <div class="svc__track" id="svcTrack">
+
+        <article class="svc__panel">
+          <div class="svc__panel-head">
+            <span class="svc__idx">01</span>
+            <svg class="svc__glyph" viewBox="-50 -50 100 100" aria-hidden="true">
+              <g class="gear-rot svc__glyph-gear"></g>
+              <circle class="svc__glyph-ring" cx="0" cy="0" r="46"/>
+            </svg>
+          </div>
+          <h3>Mecânica Geral</h3>
+          <p class="svc__lead">O reparo certo, na primeira vez.</p>
+          <ul class="svc__list">
+            <li>Motor</li><li>Transmissão</li><li>Suspensão</li>
+            <li>Direção hidráulica</li><li>Diferencial</li><li>Caixa automática</li>
+          </ul>
+          <a class="svc__cta" href="#contato" data-wa>Solicitar este serviço →</a>
+        </article>
+
+        <article class="svc__panel">
+          <div class="svc__panel-head">
+            <span class="svc__idx">02</span>
+            <svg class="svc__glyph" viewBox="-50 -50 100 100" aria-hidden="true">
+              <g class="gear-rot svc__glyph-gear"></g>
+              <circle class="svc__glyph-ring" cx="0" cy="0" r="46"/>
+            </svg>
+          </div>
+          <h3>Serviços Express</h3>
+          <p class="svc__lead">Entrou, resolveu, seguiu viagem.</p>
+          <ul class="svc__list svc__list--2">
+            <li>Troca de óleo</li><li>Pneus</li><li>Alinhamento</li><li>Balanceamento</li>
+            <li>Amortecedores</li><li>Arrefecimento</li><li>Escapamentos</li><li>Catalisadores</li>
+            <li>Ar-condicionado</li><li>Regulagem de faróis</li><li>Inspeção veicular</li><li>Acessórios</li>
+          </ul>
+          <a class="svc__cta" href="#contato" data-wa>Solicitar este serviço →</a>
+        </article>
+
+        <article class="svc__panel">
+          <div class="svc__panel-head">
+            <span class="svc__idx">03</span>
+            <svg class="svc__glyph" viewBox="-50 -50 100 100" aria-hidden="true">
+              <g class="gear-rot svc__glyph-gear"></g>
+              <circle class="svc__glyph-ring" cx="0" cy="0" r="46"/>
+            </svg>
+          </div>
+          <h3>Eletricidade &amp; Eletrônica Embarcada</h3>
+          <p class="svc__lead">A especialidade que separa oficina de oficina.</p>
+          <ul class="svc__list svc__list--2">
+            <li>Injeção / ignição eletrônica</li><li>Sistemas elétricos</li>
+            <li>Freios ABS / ESP</li><li>Air bag</li>
+            <li>Alternador / bateria</li><li>Motor de partida</li>
+            <li>Imobilizador</li><li>Regulagem de motores</li>
+          </ul>
+          <a class="svc__cta" href="#contato" data-wa>Solicitar este serviço →</a>
+        </article>
+
+        <article class="svc__panel svc__panel--cta">
+          <p class="eyebrow">// NÃO ACHOU?</p>
+          <h3>Tem outra coisa no seu carro?</h3>
+          <p class="svc__lead">Descreve pra gente. Se for sobre rodas, provavelmente resolvemos.</p>
+          <a class="btn btn--wa btn--lg" href="#contato" data-wa>Falar com a oficina</a>
+        </article>
+
+      </div>
+    </div>
+    <p class="svc__hint" id="svcHint">arraste / role →</p>
+  </section>
+
+  <!-- ============================ COMO FUNCIONA (linha de torque) ============================ -->
+  <section class="proc" id="processo">
+    <div class="proc__head">
+      <p class="eyebrow" data-reveal>// O PROCESSO AUTOMOTIVA</p>
+      <h2 data-reveal>Transparência em <span>quatro etapas.</span></h2>
+      <p class="proc__sub" data-reveal>Da chegada do carro à entrega, você sabe exatamente o que está acontecendo — e quanto vai custar.</p>
+    </div>
+
+    <div class="proc__timeline">
+      <!-- a linha que se desenha conforme você rola -->
+      <svg class="proc__line" id="procLine" viewBox="0 0 40 1000" preserveAspectRatio="none" aria-hidden="true">
+        <path id="procPath" d="M20 0 L20 1000" />
+        <path id="procPathBg" d="M20 0 L20 1000" />
+      </svg>
+
+      <ol class="proc__steps">
+        <li class="proc__step" data-reveal>
+          <div class="proc__node"><svg viewBox="-24 -24 48 48"><g class="gear-rot proc__node-gear"></g></svg></div>
+          <div class="proc__body">
+            <span class="proc__step-idx">Etapa 01</span>
+            <h3>Diagnóstico de verdade</h3>
+            <p>Recebemos seu carro e usamos equipamento Bosch para encontrar a causa real do problema. Você entende o que está acontecendo, sem “achismo”.</p>
+          </div>
+        </li>
+        <li class="proc__step" data-reveal>
+          <div class="proc__node"><svg viewBox="-24 -24 48 48"><g class="gear-rot proc__node-gear"></g></svg></div>
+          <div class="proc__body">
+            <span class="proc__step-idx">Etapa 02</span>
+            <h3>Orçamento aprovado por você</h3>
+            <p>Você recebe o preço de peças e mão de obra por escrito, <strong>antes</strong> de começar. Nada é feito sem o seu “ok” — e se surgir algo, paramos e te avisamos.</p>
+          </div>
+        </li>
+        <li class="proc__step" data-reveal>
+          <div class="proc__node"><svg viewBox="-24 -24 48 48"><g class="gear-rot proc__node-gear"></g></svg></div>
+          <div class="proc__body">
+            <span class="proc__step-idx">Etapa 03</span>
+            <h3>Execução com acompanhamento</h3>
+            <p>Serviço feito por técnicos treinados, com peças com garantia. Você recebe o status pelo WhatsApp e sabe quando o carro fica pronto.</p>
+          </div>
+        </li>
+        <li class="proc__step" data-reveal>
+          <div class="proc__node"><svg viewBox="-24 -24 48 48"><g class="gear-rot proc__node-gear"></g></svg></div>
+          <div class="proc__body">
+            <span class="proc__step-idx">Etapa 04</span>
+            <h3>Entrega com garantia</h3>
+            <p>Devolvemos o carro com checklist do que foi feito e garantia em peças e serviço. Qualquer dúvida depois, é só voltar.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============================ A NOSSA OFICINA (fotos reais) ============================ -->
+  <section class="shop" id="oficina">
+    <div class="shop__head">
+      <p class="eyebrow" data-reveal>// A NOSSA OFICINA</p>
+      <h2 data-reveal>Pode entrar e ver. <span>Aqui nada fica escondido.</span></h2>
+      <p class="shop__sub" data-reveal>Box equipado, elevadores e diagnóstico Bosch — e uma equipe que cuida do seu carro como se fosse o nosso. Passe pra conhecer de perto.</p>
+    </div>
+    <div class="shop__grid">
+      <figure class="shop__fig shop__fig--main" data-reveal>
+        <img src="assets/oficina-interior.jpg" alt="Interior da oficina Automotiva Express em Buritis, com vários carros em elevadores" loading="lazy" />
+        <figcaption>Nosso galpão em Buritis — vários carros, um padrão só.</figcaption>
+      </figure>
+      <figure class="shop__fig shop__fig--side" data-reveal>
+        <img src="assets/oficina-ferramentas.jpg" alt="Painel de ferramentas organizado na Automotiva Express" loading="lazy" />
+        <figcaption>Ferramenta certa pra cada serviço.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============================ POR QUE BOSCH ============================ -->
+  <section class="bosch" id="bosch">
+    <div class="bosch__seal" data-reveal>
+      <img src="assets/bosch-car-service.png" alt="Selo Bosch Car Service" loading="lazy" />
+    </div>
+    <div class="bosch__txt">
+      <p class="eyebrow" data-reveal>// NÃO É UMA OFICINA QUALQUER</p>
+      <h2 data-reveal>É uma oficina <span>Bosch Car Service.</span></h2>
+      <p data-reveal>
+        Isso significa padrões internacionais de qualidade, mecânicos treinados pela Bosch e
+        equipamento de diagnóstico de concessionária. A mesma engenharia que está dentro do seu
+        carro, cuidando do seu carro.
+      </p>
+      <p data-reveal data-flag>
+        E mais: por usarmos peças de qualidade equivalente à original, você mantém a garantia do
+        seu veículo — sem pagar preço de concessionária.*
+      </p>
+      <div class="bosch__pillars">
+        <div data-reveal><strong>Diagnóstico Bosch</strong><span>encontra a causa, não o sintoma</span></div>
+        <div data-reveal><strong>Peças com garantia</strong><span>qualidade original ou equivalente</span></div>
+        <div data-reveal><strong>Rede mundial</strong><span>padrão Bosch em cada serviço</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ AVALIAÇÕES ============================ -->
+  <section class="rev" id="avaliacoes">
+    <div class="rev__head">
+      <div class="rev__score" data-reveal>
+        <span class="rev__num">4,3</span>
+        <span class="rev__stars">★★★★<span class="half">★</span></span>
+        <span class="rev__count">+299 avaliações no Google</span>
+      </div>
+      <div class="rev__intro" data-reveal>
+        <p class="eyebrow">// QUEM JÁ DEIXOU O CARRO AQUI</p>
+        <h2>A confiança que se constrói <span>um reparo de cada vez.</span></h2>
+      </div>
+    </div>
+
+    <!-- NOTA: cards de exemplo. Substituir pelos depoimentos REAIS do Google (ver README). -->
+    <div class="rev__grid" data-placeholder-reviews>
+      <figure class="rev__card" data-reveal>
+        <div class="rev__card-stars">★★★★★</div>
+        <blockquote>Busquei os serviços e fui atendido com seriedade e profissionalismo. Os valores da peça e da mão de obra foram antecipados e dentro do mercado. Problema resolvido. Indico.</blockquote>
+        <figcaption>— Cliente Google · serviço de mecânica</figcaption>
+      </figure>
+      <figure class="rev__card" data-reveal>
+        <div class="rev__card-stars">★★★★★</div>
+        <blockquote>Atendimento de qualidade e explicação clara do que o carro precisava. Saí sabendo exatamente o que foi feito.</blockquote>
+        <figcaption>— Substituir por avaliação real</figcaption>
+      </figure>
+      <figure class="rev__card" data-reveal>
+        <div class="rev__card-stars">★★★★★</div>
+        <blockquote>Levei pra revisão e fui muito bem atendido. Orçamento passado antes, sem surpresa na hora de pagar.</blockquote>
+        <figcaption>— Substituir por avaliação real</figcaption>
+      </figure>
+    </div>
+
+    <a class="rev__link" href="https://www.google.com/maps/place/Automotiva+Express+Service/@-19.9759025,-43.9703606,17z" target="_blank" rel="noopener">Ver todas as avaliações no Google →</a>
+  </section>
+
+  <!-- ============================ FAQ ============================ -->
+  <section class="faq" id="faq">
+    <div class="faq__head">
+      <p class="eyebrow" data-reveal>// ANTES DE LIGAR</p>
+      <h2 data-reveal>As perguntas que <span>todo mundo faz.</span></h2>
+    </div>
+    <div class="faq__list">
+      <details class="faq__item" data-reveal>
+        <summary>O orçamento pode mudar depois?<span class="faq__plus"></span></summary>
+        <p>Não. O valor que você aprova é o valor que você paga. Se algo a mais for necessário, paramos e pedimos sua autorização antes — sem surpresa na conta.</p>
+      </details>
+      <details class="faq__item" data-reveal>
+        <summary>Vocês fazem orçamento sem compromisso?<span class="faq__plus"></span></summary>
+        <p>Sim. Avaliamos seu carro e passamos o orçamento. Você decide se quer seguir, sem pressão.</p>
+      </details>
+      <details class="faq__item" data-reveal>
+        <summary>Levar numa oficina independente cancela a garantia do meu carro?<span class="faq__plus"></span></summary>
+        <p>Não. Como oficina Bosch Car Service, usamos peças e procedimentos que preservam a garantia de fábrica do seu veículo.</p>
+      </details>
+      <details class="faq__item" data-reveal>
+        <summary>Quanto tempo demora?<span class="faq__plus"></span></summary>
+        <p>Damos um prazo na hora do orçamento e mantemos você informado pelo WhatsApp. Serviços rápidos costumam sair no mesmo dia.</p>
+      </details>
+      <details class="faq__item" data-reveal>
+        <summary>As peças são originais?<span class="faq__plus"></span></summary>
+        <p>Trabalhamos com peças de qualidade original ou equivalente, todas com garantia.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- ============================ CONTATO ============================ -->
+  <section class="ct" id="contato">
+    <figure class="ct__photo" data-reveal>
+      <img src="assets/oficina-fachada.jpg" alt="Fachada da Automotiva Express na Av. Professor Mário Werneck, Buritis — Belo Horizonte" loading="lazy" />
+      <figcaption>Av. Professor Mário Werneck, 2570 — Buritis, BH. É só chegar.</figcaption>
+    </figure>
+    <div class="ct__grid">
+      <div class="ct__left">
+        <p class="eyebrow" data-reveal>// VAMOS RESOLVER SEU CARRO</p>
+        <h2 data-reveal>Seu carro merece um <span>diagnóstico de verdade.</span></h2>
+        <p class="ct__lead" data-reveal>Conta o que está acontecendo. Em segundos a gente monta sua mensagem e abre o WhatsApp da oficina, já preenchida.</p>
+
+        <ul class="ct__info">
+          <li data-reveal>
+            <span class="ct__info-k">Endereço</span>
+            <a href="https://www.google.com/maps/place/Automotiva+Express+Service/@-19.9759025,-43.9703606,17z" target="_blank" rel="noopener">Av. Professor Mário Werneck, 2570 — Buritis, Belo Horizonte/MG · CEP 30575-180</a>
+          </li>
+          <li data-reveal>
+            <span class="ct__info-k">Telefones</span>
+            <a href="tel:+553133780214">(31) 3378-0214</a> · <a href="tel:+553125528644">(31) 2552-8644</a>
+          </li>
+          <li data-reveal>
+            <span class="ct__info-k">Horário</span>
+            <span data-flag>Segunda a sexta · 8h às 18h*</span>
+          </li>
+          <li data-reveal>
+            <span class="ct__info-k">Social</span>
+            <a href="https://www.instagram.com/automotivaexpress/" target="_blank" rel="noopener">@automotivaexpress</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="ct__form-wrap" data-reveal>
+        <form class="ct__form" id="waForm" novalidate>
+          <h3>Pedir orçamento</h3>
+          <label>Seu nome
+            <input type="text" id="fNome" placeholder="Ex.: João Silva" required />
+          </label>
+          <div class="ct__row">
+            <label>Veículo
+              <input type="text" id="fCarro" placeholder="Ex.: Corolla 2019" />
+            </label>
+            <label>Telefone <span>(opcional)</span>
+              <input type="tel" id="fTel" placeholder="(31) 9 ____-____" />
+            </label>
+          </div>
+          <label>O que o carro precisa?
+            <select id="fServico">
+              <option value="Revisão / troca de óleo">Revisão / troca de óleo</option>
+              <option value="Mecânica geral (motor, câmbio, suspensão)">Mecânica geral (motor, câmbio, suspensão)</option>
+              <option value="Freios / ABS">Freios / ABS</option>
+              <option value="Elétrica / eletrônica embarcada">Elétrica / eletrônica embarcada</option>
+              <option value="Ar-condicionado">Ar-condicionado</option>
+              <option value="Luz acesa no painel (diagnóstico)">Luz acesa no painel (diagnóstico)</option>
+              <option value="Outro">Outro</option>
+            </select>
+          </label>
+          <label>Detalhes <span>(opcional)</span>
+            <textarea id="fMsg" rows="3" placeholder="Ex.: barulho ao frear, luz da injeção acesa..."></textarea>
+          </label>
+          <button class="btn btn--wa btn--block btn--lg" type="submit">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.6 4.8-1.3A10 10 0 1 0 12 2Zm5.4 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.4-.7-2.9-1.2-4.7-4.1-4.8-4.3-.2-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6c-.2.2-.3.4-.1.7.2.3.9 1.4 1.9 2.3 1.3 1.1 2.3 1.5 2.6 1.6.3.1.5.1.6-.1l.8-1c.2-.2.4-.2.6-.1l1.9.9c.3.2.4.2.5.4.1.1.1.6-.1 1.2Z"/></svg>
+            Enviar pelo WhatsApp
+          </button>
+          <p class="ct__form-note">Sem compromisso. Resposta em horário comercial.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- ============================ FOOTER ============================ -->
+  <footer class="ft">
+    <div class="ft__top">
+      <div class="ft__brand">
+        <img class="ft__logo" src="assets/logo-automotiva-transp.png" alt="Automotiva Express" />
+        <p>Oficina Bosch Car Service · Buritis, Belo Horizonte/MG</p>
+      </div>
+      <img class="ft__seal" src="assets/bosch-car-service.png" alt="Bosch Car Service" loading="lazy" />
+    </div>
+    <div class="ft__bottom">
+      <nav class="ft__nav">
+        <a href="#servicos">Serviços</a><a href="#processo">Processo</a>
+        <a href="#bosch">Por que Bosch</a><a href="#contato">Contato</a>
+        <a href="https://www.instagram.com/automotivaexpress/" target="_blank" rel="noopener">Instagram</a>
+      </nav>
+      <p class="ft__copy">© <span id="year">2026</span> Automotiva Express Service · Todos os direitos reservados</p>
+    </div>
+  </footer>
+
+  <!-- ============================ SCRIPTS ============================ -->
+  <script src="js/vendor/gsap.min.js"></script>
+  <script src="js/vendor/ScrollTrigger.min.js"></script>
+  <script src="js/vendor/lenis.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
