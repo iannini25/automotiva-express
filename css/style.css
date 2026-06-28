@@ -162,7 +162,7 @@ textarea:focus-visible,summary:focus-visible{
 /* ============================ FILM / HERÓI CINEMATOGRÁFICO ============================ */
 /* #film alto + palco sticky: o canvas "reproduz" o filme conforme o scroll, o texto troca por ato */
 #film{height:640vh;position:relative}
-.film__stage{position:sticky;top:0;height:100svh;overflow:hidden;display:grid;place-items:center}
+.film__stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:grid;place-items:center}
 .hero__canvas{position:absolute;inset:0;width:100%;height:100%;z-index:1}
 .hero__scrim{
   position:absolute;inset:0;z-index:2;
@@ -344,10 +344,13 @@ h3{font-family:var(--display);font-weight:600}
 .svc__hint{font-family:var(--mono);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--steel);text-align:right;padding:18px var(--pad) 0}
 
 /* ============================ COMO FUNCIONA ============================ */
+/* contém o sangramento decorativo (linha/nós absolutos + engrenagens girando com
+   overflow visível) dentro da seção — texto visível cabe folgado, nada é cortado */
+.proc{overflow-x:clip}
 .proc__head{max-width:660px;margin-bottom:clamp(40px,6vh,70px)}
 .proc__head h2{margin:.35em 0}
 .proc__sub{font-family:var(--sub);color:var(--muted);font-size:clamp(1rem,1.3vw,1.12rem)}
-.proc__timeline{position:relative;padding-left:clamp(48px,7vw,90px)}
+.proc__timeline{position:relative;padding-left:clamp(48px,7vw,90px);overflow-x:clip}
 .proc__line{position:absolute;left:clamp(8px,2.6vw,30px);top:6px;height:calc(100% - 60px);width:40px}
 .proc__line path{fill:none;stroke-width:2;vector-effect:non-scaling-stroke}
 #procPathBg{stroke:var(--line)}
@@ -480,6 +483,23 @@ h3{font-family:var(--display);font-weight:600}
 /* conteúdo é visível por padrão (no-JS friendly); JS aplica o from-state quando há movimento */
 
 /* ============================ RESPONSIVO ============================ */
+
+/* --- Segurança contra overflow horizontal -----------------------------------
+   No mobile, itens de grid/flex herdam min-width:auto e NÃO encolhem abaixo do
+   min-content do conteúdo (ex.: a largura intrínseca de um <textarea>/<input>),
+   estourando a faixa 1fr para fora da viewport. min-width:0 + quebra de palavra
+   resolvem na raiz (não é band-aid de overflow:hidden). --------------------- */
+.ct__grid > *,.bosch,.bosch__txt,.rev__head,.rev__intro,.proc__body{min-width:0}
+.ct__form input,.ct__form select,.ct__form textarea{min-width:0}
+.btn--block{white-space:normal}                 /* botão largo quebra linha em vez de vazar */
+.ct__info a,.ct__info span,.ft__brand p,.proc__body p,.rev__card blockquote{overflow-wrap:anywhere}
+
+/* --- Safe-area (notch / ilha / barra inferior dos celulares) --- */
+.hd{
+  padding-left:max(var(--pad),env(safe-area-inset-left));
+  padding-right:max(var(--pad),env(safe-area-inset-right));
+}
+
 @media (max-width:980px){
   .promise__grid,.bosch__pillars,.rev__grid{grid-template-columns:1fr}
   .bosch{grid-template-columns:1fr;text-align:center}
@@ -508,18 +528,66 @@ h3{font-family:var(--display);font-weight:600}
   .svc__viewport{overflow-x:auto;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;scrollbar-width:none}
   .svc__viewport::-webkit-scrollbar{display:none}
   .svc__panel{width:82vw;scroll-snap-align:start}
-  .hero__seal img{width:64px}
+
+  /* --- HERÓI no mobile: o texto respira e não colide com selo/dica --- */
+  #film{height:540vh}                                /* filme um pouco mais curto no celular (menos rolagem) */
+  .hero__scroll{display:none}                        /* a dica "role" colidia com a CTA do ato; o filme já convida a rolar */
+  .hero__seal{bottom:max(18px,env(safe-area-inset-bottom));right:max(14px,env(safe-area-inset-right))}
+  .hero__seal img{width:58px}
+  .act--bottom,.act--bottom-left{padding-bottom:clamp(76px,17vh,150px)}
+  .eyebrow--hero{font-size:.62rem;letter-spacing:.1em}
+  .hero__title{font-size:clamp(2.1rem,8.4vw,3.4rem)}
+  .hero__sub{font-size:clamp(1.02rem,3.4vw,1.2rem);margin-bottom:1.25em}
+  .act__statement{font-size:clamp(1.7rem,7vw,2.7rem);max-width:18ch}
 }
 
 @media (max-width:560px){
   .trust__row{grid-template-columns:1fr 1fr}
   .trust__row li::after{display:none}
   .ct__row{grid-template-columns:1fr}
-  .hero__actions .btn{width:100%}
   .hero__bar{flex-direction:column;gap:6px;max-width:none}
   .hero__bar-field + .hero__bar-field{border-left:none;border-top:1px solid var(--line-soft)}
   .hero__bar-go{width:100%}
   .ft__bottom{flex-direction:column;align-items:flex-start}
+
+  /* COMO FUNCIONA: a timeline (linha + nós absolutos) cabe em telas estreitas */
+  .proc__timeline{padding-left:44px}
+  .proc__line{left:5px;width:30px}
+  .proc__node{left:-40px;width:42px;height:42px}
+  .proc__node svg{width:28px;height:28px}
+
+  /* selo Bosch menor; CTA do formulário com folga */
+  .bosch__seal img{width:min(220px,62vw)}
+  .ct__form .btn{font-size:.95rem;padding:.9em 1em}
+  .svc__panel{width:86vw}
+}
+
+@media (max-width:380px){
+  .hero__title{font-size:clamp(1.85rem,9.2vw,2.3rem)}
+  .act__statement{font-size:clamp(1.5rem,8.2vw,2.1rem)}
+  .eyebrow--hero{font-size:.57rem;letter-spacing:.08em}
+  .trust__row{gap:22px 14px}
+  .promise__quote{font-size:clamp(1.7rem,9vw,2.4rem)}
+}
+
+/* --- HERÓI em paisagem (telas baixas): compacta na vertical para caber no svh --- */
+@media (max-height:520px) and (orientation:landscape){
+  .act{align-items:center}
+  .hero__title{font-size:clamp(1.7rem,7.4vh,2.6rem);margin:.22em 0}
+  .hero__sub{margin-bottom:.85em;font-size:1.02rem}
+  .hero__secondary{margin-top:1em}
+  .hero__scroll{display:none}
+  .act--bottom,.act--bottom-left{padding-bottom:clamp(36px,11vh,72px)}
+  .act__statement{font-size:clamp(1.5rem,8vh,2.6rem)}
+}
+
+/* --- Alvos de toque maiores onde o ponteiro é grosso (dedo) --- */
+@media (pointer:coarse){
+  .hd__burger{min-width:44px;min-height:44px;justify-content:center;padding:8px}
+  .hero__bar-field{padding:13px 16px}
+  .hd__nav a{padding-block:18px}
+  .faq__item summary{padding-block:21px}
+  .hero__secondary,.svc__cta,.rev__link{padding-block:6px}
 }
 
 /* ============================ MOVIMENTO REDUZIDO ============================ */
